@@ -1,70 +1,314 @@
-# Getting Started with Create React App
+# Test Development Integrasia Utama
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Test Dev Frontend By Eko Permana
 
-## Available Scripts
+## Hasil Test
+![Hasil Test](public/assets/readme/page.png)
 
-In the project directory, you can run:
+## Detail Soal dan Jawaban
+#### Soal 1 ####
+    1. Buat data array dengan merepresentasikan sebegai berikut:
+        Esa mempunyai mainan dengan macam-macam bentuk dan warna seperti berikut:
+         - kotak = 4 merah; 9 hijau; 10 hitam
+         - lingkaran = 40 hijau, 23 hitam, 7 kuning
+         - bintang = 10 kuning, 8 merah, 7 hijau, 9 hitam, 10 jingga
+         - segitiga = 8 merah, 9 kuning, 19 hijau, 10 hitam
+#### Kode: ####
+```json
+{
+    "data": [
+        {
+            "bentuk": "kotak",
+            "warna": "merah",
+            "jumlah": 4
+        },
+        {
+            "bentuk": "kotak",
+            "warna": "hijau",
+            "jumlah": 9
+        },
+        {
+            "bentuk": "kotak",
+            "warna": "hitam",
+            "jumlah": 10
+        },
+        {
+            "bentuk": "lingkaran",
+            "warna": "hijau",
+            "jumlah": 40
+        },
+        {
+            "bentuk": "lingkaran",
+            "warna": "hitam",
+            "jumlah": 23
+        },
+        {
+            "bentuk": "lingkaran",
+            "warna": "kuning",
+            "jumlah": 7
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "kuning",
+            "jumlah": 10
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "merah",
+            "jumlah": 8
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "hijau",
+            "jumlah": 7
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "hitam",
+            "jumlah": 9
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "jingga",
+            "jumlah": 10
+        },
+        {
+            "bentuk": "segitiga",
+            "warna": "merah",
+            "jumlah": 8
+        },
+        {
+            "bentuk": "segitiga",
+            "warna": "kuning",
+            "jumlah": 9
+        },
+        {
+            "bentuk": "segitiga",
+            "warna": "hijau",
+            "jumlah": 19
+        },
+        {
+            "bentuk": "segitiga",
+            "warna": "hitam",
+            "jumlah": 10
+        }
+    ]
+}
+```
+```js
+// Manipulasi warna untuk kebutuhan UI
+export const colorMapping = {
+    'hitam': 'black',
+    'merah': 'red',
+    'hijau': 'green',
+    'kuning': 'yellow',
+    'jingga': 'orange'
+};
+```
+#### Hasil: ####
+![Soal 1](public/assets/readme/soal1.png)
 
-### `npm start`
+#### Soal 2 ####
+    2. Buat fungsi untuk mengambil mainan dari seluruh bentuknya yang warna merah
+#### Kode: ####
+```js
+// Mengambil data mainan.json dengan filter warna merah
+export const filterToyData = async () => {
+    try {
+        const response = await fetch(`${baseUrl}mainan.json`);
+        const data = await response.json();
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+        // Manipulasi warna menggunakan colorMapping
+        const manipulatedData = data['data'].map(item => ({
+            ...item,
+            warna: colorMapping[item.warna] || item.warna // Mengganti warna jika ada di colorMapping
+        }));
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+        const redItems = manipulatedData.filter(item => item.warna === 'red');
+        return redItems;
+    } catch (error) {
+        console.error('Gagal memfilter data:', error);
+        return null;
+    }
+};
+```
+```js
+// Tindakan untuk memfilter item warna merah
+const getRedItems = async () => {
+    if (!buttonClicked.getRed) {
+        try {
+            const data = await filterToyData(); // Memanggil api yang memfilter mainan warna merah
+            setToyData([...data]); // Mendeklarasikan semua array
+            setButtonText({ ...buttonText, getRed: 'Refresh' });
+            setButtonClicked({ ...buttonClicked, getRed: true });
+        } catch (error) {
+            console.error('Gagal mengambil data merah:', error);
+        }
+    } else {
+        setToyData(originalToyData);
+        setButtonText({ ...buttonText, getRed: 'Filter Warna Merah' });
+        setButtonClicked({ ...buttonClicked, getRed: false });
+    }
+};
+```
+#### Hasil: ####
+![Soal 2](public/assets/readme/soal2.png)
 
-### `npm test`
+#### Soal 3 ####
+    3. Buat fungsi untuk mengganti mainan lingkaran yang berwarna hijau menjadi warna hitam
+#### Kode: ####
+```js
+// Mengambil data mainan.json
+export const fetchToyData = async () => {
+    try {
+        const response = await fetch(`${baseUrl}mainan.json`);
+        const data = await response.json();
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+        // Manipulasi warna menggunakan colorMapping
+        const manipulatedData = data['data'].map(item => ({
+            ...item,
+            warna: colorMapping[item.warna] || item.warna // Mengganti warna jika ada di colorMapping
+        }));
 
-### `npm run build`
+        return manipulatedData;
+    } catch (error) {
+        console.error('Gagal menampilkan data:', error);
+        return null;
+    }
+};
+```
+```js
+// Tindakan untuk mengubah item lingkaran hijau ke hitam
+const changeGreenToBlack = () => {
+    if (!buttonClicked.changeColor) {
+        const updatedData = toyData.map(item => {
+            if (item.bentuk === 'lingkaran' && item.warna === 'green') {
+                return { ...item, warna: 'black' };
+            }
+            return item;
+        });
+        setToyData(updatedData);
+        setButtonText({ ...buttonText, changeColor: 'Refresh' });
+        setButtonClicked({ ...buttonClicked, changeColor: true });
+    } else {
+        setToyData(originalToyData);
+        setButtonText({ ...buttonText, changeColor: 'Lingkaran Hijau Menjadi Hitam' });
+        setButtonClicked({ ...buttonClicked, changeColor: false });
+    }
+};
+```
+#### Hasil: ####
+![Soal 3](public/assets/readme/soal3.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Soal 4 ####
+    4. Buat fungsi yang mengurutkan berdasarkan warna merah, kuning, hijau, hitam, jingga
+#### Kode: ####
+```js
+// Urutan warna untuk sortir warna
+export const colorOrder = {
+    'red': 1,
+    'yellow': 2,
+    'green': 3,
+    'black': 4,
+    'orange': 5
+};
+```
+```js
+// Tindakan untuk sortir item mainan melalui warna
+const sortMainanByColor = () => {
+    if (!buttonClicked.sort) {
+        const sortedData = [...toyData].sort((a, b) => {
+            return colorOrder[a.warna] - colorOrder[b.warna];
+        });
+        setToyData(sortedData);
+        setButtonText({ ...buttonText, sort: 'Refresh' });
+        setButtonClicked({ ...buttonClicked, sort: true });
+    } else {
+        setToyData(originalToyData);
+        setButtonText({ ...buttonText, sort: 'Sortir Warna' });
+        setButtonClicked({ ...buttonClicked, sort: false });
+    }
+};
+```
+#### Hasil: ####
+![Soal 4](public/assets/readme/soal4.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Soal 5 ####
+    5. Buatkan fungsi yang memformat json (assets/json/case.json) menjadi seperti (assets/json/expectation.json)
+#### Kode: ####
+```js
+// Mengambil data case.json
+export const fetchCaseData = async () => {
+    try {
+        const response = await fetch(`${baseUrl}case.json`);
+        const data = await response.json();
+        return data['data'];
+    } catch (error) {
+        console.error('Gagal menampilkan data:', error);
+        return null;
+    }
+};
+```
+```js
+// Mengelompokkan kategori buah dan hewan agar buah lebih dulu ditampilkan
+export const filterData = (caseData) => {
+    const filtered = {
+        total: 0,
+        data: []
+    };
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    // Objek untuk menyimpan total per code
+    const totalsByCode = {};
 
-### `npm run eject`
+    // Filter data untuk Buah dan Hewan
+    const categories = ['Buah', 'Hewan'];
+    categories.forEach(category => {
+        const categoryData = {
+            category: category,
+            total: 0,
+            data: {}
+        };
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+        const filteredItems = caseData.filter(item => item.category === category);
+        filteredItems.forEach(item => {
+            const { code, name, total } = item;
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+            // Inisialisasi total untuk kode jika belum ada
+            if (!totalsByCode[code]) {
+                totalsByCode[code] = 0;
+            }
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+            // Akumulasi total untuk kode
+            totalsByCode[code] += total;
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+            // Mengumpulkan data untuk kode
+            if (!categoryData.data[code]) {
+                categoryData.data[code] = {
+                    total: 0,
+                    data: []
+                };
+            }
+            categoryData.data[code].total += total;
+            categoryData.data[code].data.push({ name, total });
 
-## Learn More
+            // Akumulasi total kategori
+            categoryData.total += total;
+        });
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+        filtered.total += categoryData.total;
+        filtered.data.push(categoryData);
+    });
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    // Tambahkan total per code ke dalam data kategori
+    filtered.data.forEach(categoryData => {
+        Object.keys(categoryData.data).forEach(code => {
+            categoryData.data[code].total = totalsByCode[code];
+        });
+    });
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    return filtered;
+};
+```
+#### Hasil: ####
+![Soal 5](public/assets/readme/soal5_case.png)
+![Soal 5](public/assets/readme/soal5_expectation.png)
