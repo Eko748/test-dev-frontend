@@ -1,0 +1,79 @@
+{
+    "data": [
+        {
+            "bentuk": "kotak",
+            "warna": "merah",
+            "jumlah": 4
+        },
+        {
+            "bentuk": "kotak",
+            "warna": "hijau",
+            "jumlah": 9
+        },
+        {
+            "bentuk": "kotak",
+            "warna": "hitam",
+            "jumlah": 10
+        },
+        {
+            "bentuk": "lingkaran",
+            "warna": "hijau",
+            "jumlah": 40
+        },
+        {
+            "bentuk": "lingkaran",
+            "warna": "hitam",
+            "jumlah": 23
+        },
+        {
+            "bentuk": "lingkaran",
+            "warna": "kuning",
+            "jumlah": 7
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "kuning",
+            "jumlah": 10
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "merah",
+            "jumlah": 8
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "hijau",
+            "jumlah": 7
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "hitam",
+            "jumlah": 9
+        },
+        {
+            "bentuk": "bintang",
+            "warna": "jingga",
+            "jumlah": 10
+        },
+        {
+            "bentuk": "segitiga",
+            "warna": "merah",
+            "jumlah": 8
+        },
+        {
+            "bentuk": "segitiga",
+            "warna": "kuning",
+            "jumlah": 9
+        },
+        {
+            "bentuk": "segitiga",
+            "warna": "hijau",
+            "jumlah": 19
+        },
+        {
+            "bentuk": "segitiga",
+            "warna": "hitam",
+            "jumlah": 10
+        }
+    ]
+}
